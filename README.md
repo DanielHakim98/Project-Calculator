@@ -3,7 +3,7 @@
 * Final Project for The Odin Project: Foundation course.
 * It's a website contains GUI of calculator that is functional to perform some basics math operation.
 
---
+---
 6/10/21:
 * Struggle a lot with the presentation of the numbers in the screen.
 * Complete basics mathematical operation (add,subtract,divide,multiply).
