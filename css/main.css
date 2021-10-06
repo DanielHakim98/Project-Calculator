@@ -1,0 +1,32 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 100vh;
+    background-color:thistle;
+}
+
+.calculator{
+    background-color: cadetblue;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.screen{
+    display: flex;
+    justify-content: center;
+    background-color: whitesmoke;
+    font-size: large;
+    font-weight: 600;
+}
