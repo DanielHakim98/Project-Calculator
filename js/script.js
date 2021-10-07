@@ -37,10 +37,15 @@ const factory =function(arr){
 
   for(let i=0; i<arr.length; i++){
     if(!regex.test(arr[i])){
+        if(arr[i]=="-" && i==0){
+            num1+=arr[i];
+        }
+        else{
         arr.splice(0,i);
         operator=arr.splice(0,1);
         num2=secondloop(arr,regex);
-        break;    
+        break;   
+        } 
     }
     else{
         num1+=arr[i];
@@ -49,6 +54,7 @@ const factory =function(arr){
   
   let total=round(operate(num1,num2,operator),2);
   console.log(total);
+  total=total.toString();
   arr.splice(0,1,total);
   arrTotal=arr.map((x)=>x);
   display(arrTotal);
@@ -71,8 +77,9 @@ const secondloop=function(arr,regex){
 
 const isOperator=function(arr){
     for(let i=0; i<arr.length; i++){
-        if(!regex.test(arr[i])){
-            return false
+        if(!regex.test(arr[i]) && arr[i]!='-'){
+            if(arr[i]=="-" && i==0) continue;
+            else return false
         }
         else
         continue;
