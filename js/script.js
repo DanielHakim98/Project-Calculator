@@ -23,77 +23,33 @@ const operate = function(num1,num2,operator){
 const display = function(arr){
     const show=arr.reduce((total,item)=>{
     return total + item;
-   },);
-   console.log(show);
-   screen.textContent=show;
-
+   });
+   return show;
 };
 
-const factory =function(arr){
-   const regex=/^[0-9\.]/;
-   let num1="";
-   let operator="";
-   let num2="";
-
-  for(let i=0; i<arr.length; i++){
-    if(!regex.test(arr[i])){
-        if(arr[i]=="-" && i==0){
-            num1+=arr[i];
-        }
-        else{
-        arr.splice(0,i);
-        operator=arr.splice(0,1);
-        num2=secondloop(arr,regex);
-        break;   
-        } 
-    }
-    else{
-        num1+=arr[i];
-    }
-  }
-  
-  let total=round(operate(num1,num2,operator),2);
-  console.log(total);
-  total=total.toString();
-  arr.splice(0,1,total);
-  arrTotal=arr.map((x)=>x);
-  display(arrTotal);
-  console.log(arrTotal);
-};
-
-const secondloop=function(arr,regex){
-    let num2="";
-    for(let i=0; i<arr.length; i++){
-        if(!regex.test(arr[i])){
-            arr.splice(0,i);
-            break;    
-        }
-        else{
-            num2+=arr[i];
-        }
-    }
-    return num2;
-}
-
-const isOperator=function(arr){
-    for(let i=0; i<arr.length; i++){
-        if(!regex.test(arr[i]) && arr[i]!='-'){
-            if(arr[i]=="-" && i==0) continue;
-            else return false
-        }
-        else
-        continue;
-    }
-    return true;
+const connect =function(str1,operator,str2){
+    screen.textContent=str1+" "+operator+" "+str2;
 }
 
 function round(value, decimals) {
     return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
-const arr=[];
-let arrTotal=[];
-let displayString="";
+
+class Object {
+    constructor(num1,operator,num2) {
+        this.num1 = num1;
+        this.operator = operator;
+        this.num2 = num2;
+    }
+};
+let arrNum1=[];
+let arrNum2=[];
+let strNum1="";
+let operator="";
+let strNum2="";
+let total;
+
 const screen = document.querySelector('.screen');
 const regex=/^[0-9\.]/;
 console.log(screen)
@@ -101,12 +57,28 @@ console.log(screen)
 const btnsNumber=document.querySelectorAll('[data-number]');
 btnsNumber.forEach((btn)=>{
     btn.addEventListener('click',(e)=>{
-        if(arrTotal.length!==0 && isOperator(arr)){
-            arrTotal.length=0;
-            arr.length=0;
+        if(operator===""){
+            if(arrNum1.length!==0 && total==true){
+                total="";
+                arrNum1.length=0;
+                arrNum1.push(e.target.textContent);
+                strNum1=display(arrNum1);
+                connect(strNum1,operator,strNum2);
+            }
+            else{
+                arrNum1.push(e.target.textContent);
+                strNum1=display(arrNum1);
+                connect(strNum1,operator,strNum2);
+            }
         }
-        arr.push(e.target.textContent);
-        display(arr);
+
+        else{ 
+            arrNum2.push(e.target.textContent);
+            strNum2=display(arrNum2);
+            connect(strNum1,operator,strNum2);
+        }
+        console.log(arrNum1);
+        console.log(arrNum2);
     });
 });
 
@@ -114,49 +86,70 @@ btnsNumber.forEach((btn)=>{
 const btnsOperator=document.querySelectorAll('[data-operator]');
 btnsOperator.forEach((btn)=>{
     btn.addEventListener('click',(e)=>{
-        if(e.target.textContent==="="){
-        arr.push(e.target.textContent);
-        display(arr);
-        factory(arr);
+        if(arrNum1.length==0 && e.target.textContent=='-'){
+            arrNum1.push(e.target.textContent);
+            strNum1=display(arrNum1);
+            connect(strNum1,operator,strNum2);
+        }
+        
+        else if(operator!=="" && e.target.textContent==="-"){
+            arrNum2.push(e.target.textContent);
+            strNum2=display(arrNum2);
+            connect(strNum1,operator,strNum2);
         }
 
-        else if(!isOperator(arr)){
-        factory(arr);
-        arr.push(e.target.textContent);
-        display(arr);
+        else if(total){
+            arrNum1.push(total);
+            operator=e.target.textContent;
+            strNum1=display(arrNum1);
+            connect(strNum1,operator,strNum2);
         }
 
         else{
-        console.log(e.target.textContent);
-        arr.push(e.target.textContent);
-        display(arr);
-        console.log(arr);
+            operator=e.target.textContent;
+            //arrNum1.push(e.target.textContent);
+            connect(strNum1,operator,strNum2);
         }
+        console.log(operator);
     });
+});
+
+const btnEqual=document.getElementById('equal');
+btnEqual.addEventListener('click',(e)=>{
+    total=round(operate(strNum1,strNum2,operator),2);
+    total=total.toString();
+    arrNum1.length=0;
+    arrNum2.length=0;
+    strNum2="";
+    operator="";
+    arrNum1.push(total);
+    strNum1=display(arrNum1);
+    screen.textContent=total;
+    arrNum1.length=0;
+    strNum1="";
 });
 
 const btnPoint = document.getElementById('point');
 btnPoint.addEventListener('click',(e)=>{
-    //console.log(e.target);
-    arr.push(e.target.textContent);
-    display(arr);
+    
 });
-
-
-
-
 
 
 const btnClear = document.getElementById('clear');
 btnClear.addEventListener('click',(e)=>{
-    arr.length=0;
-    screen.textContent="0";
-    //console.log(e.target);
+  arrNum1.length=0;
+  arrNum2.length=0;
+  operator="";
+  strNum1="";
+  strNum2="";
+  total="";
+  screen.textContent=0;
+
 });
 
 const btnDelete = document.getElementById('delete');
 btnDelete.addEventListener('click',(e)=>{
-    //console.log(e.target);
+    
 });
 
 

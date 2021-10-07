@@ -17,3 +17,7 @@
 * Style the calculator and add a background image. (The image is taken from Pexels.com, a Copyright free collection of photos).
 * Special thanks to Jakub Novacek for the background photo uploaded at Pexels.com
 ---
+8/10/21:
+* Still struggling with number direct concats with previous total calculation when number clicked.
+* Another thing is handling negative number. Such a mess actually, it's either I'm mindlessly coding or The project is really difficult.
+* The code has been simplify but it looks messy because all of them are not put in a function.  
