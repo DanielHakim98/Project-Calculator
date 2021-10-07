@@ -12,3 +12,8 @@
     * Number is directly 'concat' after clicking on number "For example: 1+2=3, so the screen will show only '3' but when one the number buttons is clicked (assume clicked button "9"), it becomes '39' not '9'.
     * Calculation error if more than one operator stored inside array.
 ---
+7/10/21:
+* Fix 2/3 errors on the calculation error except for the decimal insertion and when "=" is clicked when there is no input.
+* Style the calculator and add a background image. (The image is taken from Pexels.com, a Copyright free collection of photos).
+* Special thanks to Jakub Novacek for the background photo uploaded at Pexels.com
+---
