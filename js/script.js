@@ -20,14 +20,14 @@ const operate = function(num1,num2,operator){
     else return divide(num1,num2);
 };
 
-const display = function(arr){
+const makeIntoANumber = function(arr){
     const show=arr.reduce((total,item)=>{
     return total + item;
    });
    return show;
 };
 
-const connect =function(str1,operator,str2){
+const connectAllString =function(str1,operator,str2){
     screen.textContent=str1+" "+operator+" "+str2;
 }
 
@@ -36,19 +36,12 @@ function round(value, decimals) {
 }
 
 
-class Object {
-    constructor(num1,operator,num2) {
-        this.num1 = num1;
-        this.operator = operator;
-        this.num2 = num2;
-    }
-};
 let arrNum1=[];
 let arrNum2=[];
 let strNum1="";
 let operator="";
 let strNum2="";
-let total;
+let total="";
 
 const screen = document.querySelector('.screen');
 const regex=/^[0-9\.]/;
@@ -58,24 +51,24 @@ const btnsNumber=document.querySelectorAll('[data-number]');
 btnsNumber.forEach((btn)=>{
     btn.addEventListener('click',(e)=>{
         if(operator===""){
-            if(arrNum1.length!==0 && total==true){
+            if(arrNum1.length!==0 && total.length!==0){
                 total="";
                 arrNum1.length=0;
                 arrNum1.push(e.target.textContent);
-                strNum1=display(arrNum1);
-                connect(strNum1,operator,strNum2);
+                strNum1=makeIntoANumber(arrNum1);
+                connectAllString(strNum1,operator,strNum2);
             }
             else{
                 arrNum1.push(e.target.textContent);
-                strNum1=display(arrNum1);
-                connect(strNum1,operator,strNum2);
+                strNum1=makeIntoANumber(arrNum1);
+                connectAllString(strNum1,operator,strNum2);
             }
         }
 
         else{ 
             arrNum2.push(e.target.textContent);
-            strNum2=display(arrNum2);
-            connect(strNum1,operator,strNum2);
+            strNum2=makeIntoANumber(arrNum2);
+            connectAllString(strNum1,operator,strNum2);
         }
         console.log(arrNum1);
         console.log(arrNum2);
@@ -87,28 +80,41 @@ const btnsOperator=document.querySelectorAll('[data-operator]');
 btnsOperator.forEach((btn)=>{
     btn.addEventListener('click',(e)=>{
         if(arrNum1.length==0 && e.target.textContent=='-'){
-            arrNum1.push(e.target.textContent);
-            strNum1=display(arrNum1);
-            connect(strNum1,operator,strNum2);
+            if(total){
+                arrNum1.push(total);
+                operator=e.target.textContent;
+                strNum1=makeIntoANumber(arrNum1);
+                connectAllString(strNum1,operator,strNum2); 
+            }
+            else{
+                arrNum1.push(e.target.textContent);
+                strNum1=makeIntoANumber(arrNum1);
+                connectAllString(strNum1,operator,strNum2); 
+            }
+           
         }
         
         else if(operator!=="" && e.target.textContent==="-"){
             arrNum2.push(e.target.textContent);
-            strNum2=display(arrNum2);
-            connect(strNum1,operator,strNum2);
+            strNum2=makeIntoANumber(arrNum2);
+            connectAllString(strNum1,operator,strNum2);
         }
 
         else if(total){
-            arrNum1.push(total);
+            if(arrNum1.length!==0){
+                total="";  
+            }
+
+            else arrNum1.push(total);
+
             operator=e.target.textContent;
-            strNum1=display(arrNum1);
-            connect(strNum1,operator,strNum2);
+            strNum1=makeIntoANumber(arrNum1);
+            connectAllString(strNum1,operator,strNum2);
         }
 
         else{
             operator=e.target.textContent;
-            //arrNum1.push(e.target.textContent);
-            connect(strNum1,operator,strNum2);
+            connectAllString(strNum1,operator,strNum2);
         }
         console.log(operator);
     });
@@ -123,7 +129,7 @@ btnEqual.addEventListener('click',(e)=>{
     strNum2="";
     operator="";
     arrNum1.push(total);
-    strNum1=display(arrNum1);
+    strNum1=makeIntoANumber(arrNum1);
     screen.textContent=total;
     arrNum1.length=0;
     strNum1="";
