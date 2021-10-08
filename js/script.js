@@ -50,8 +50,8 @@ console.log(screen)
 const btnsNumber=document.querySelectorAll('[data-number]');
 btnsNumber.forEach((btn)=>{
     btn.addEventListener('click',(e)=>{
-        if(operator===""){
-            if(arrNum1.length!==0 && total.length!==0){
+        if(operator===""){                                          // To make sure the input is for first operand.
+            if(arrNum1.length!==0 && total.length!==0){             // Replace 'total' of the calculation when new number is clicked.
                 total="";
                 arrNum1.length=0;
                 arrNum1.push(e.target.textContent);
@@ -61,12 +61,12 @@ btnsNumber.forEach((btn)=>{
             else{
                 arrNum1.push(e.target.textContent);
                 strNum1=makeIntoANumber(arrNum1);
-                connectAllString(strNum1,operator,strNum2);
+                connectAllString(strNum1,operator,strNum2);         
             }
         }
 
         else{ 
-            arrNum2.push(e.target.textContent);
+            arrNum2.push(e.target.textContent);                    // If the 'operator === true' , the clicked numbers will be as second operand.
             strNum2=makeIntoANumber(arrNum2);
             connectAllString(strNum1,operator,strNum2);
         }
@@ -79,33 +79,32 @@ btnsNumber.forEach((btn)=>{
 const btnsOperator=document.querySelectorAll('[data-operator]');
 btnsOperator.forEach((btn)=>{
     btn.addEventListener('click',(e)=>{
-        if(arrNum1.length==0 && e.target.textContent=='-'){
-            if(total){
+        if(arrNum1.length==0 && e.target.textContent=='-'){     // To allow negative operand to be inserted.
+            if(total){                                          // Check whether '-' is to input as negative number or as operator.
                 arrNum1.push(total);
                 operator=e.target.textContent;
-                strNum1=makeIntoANumber(arrNum1);
-                connectAllString(strNum1,operator,strNum2); 
+                // strNum1=makeIntoANumber(arrNum1);
+                // connectAllString(strNum1,operator,strNum2); 
             }
             else{
                 arrNum1.push(e.target.textContent);
-                strNum1=makeIntoANumber(arrNum1);
-                connectAllString(strNum1,operator,strNum2); 
+                // strNum1=makeIntoANumber(arrNum1);
+                // connectAllString(strNum1,operator,strNum2); 
             }
-           
+            strNum1=makeIntoANumber(arrNum1);
+            connectAllString(strNum1,operator,strNum2); 
         }
         
-        else if(operator!=="" && e.target.textContent==="-"){
+        else if(operator!=="" && e.target.textContent==="-"){   // Allow second operand to be negative number.
             arrNum2.push(e.target.textContent);
             strNum2=makeIntoANumber(arrNum2);
             connectAllString(strNum1,operator,strNum2);
         }
 
-        else if(total){
-            if(arrNum1.length!==0){
-                total="";  
-            }
+        else if(total){                                         // Check for any previous calculation of 'total'.
 
-            else arrNum1.push(total);
+            if(arrNum1.length!==0) total="";                    // To start new calculation if new 'numbers' button is clicked.
+            else arrNum1.push(total);                           // Store 'Total' as first operand if no new number is clicked after previous calculation.
 
             operator=e.target.textContent;
             strNum1=makeIntoANumber(arrNum1);
@@ -124,13 +123,16 @@ const btnEqual=document.getElementById('equal');
 btnEqual.addEventListener('click',(e)=>{
     total=round(operate(strNum1,strNum2,operator),2);
     total=total.toString();
+
     arrNum1.length=0;
     arrNum2.length=0;
     strNum2="";
     operator="";
+
     arrNum1.push(total);
     strNum1=makeIntoANumber(arrNum1);
     screen.textContent=total;
+    
     arrNum1.length=0;
     strNum1="";
 });
