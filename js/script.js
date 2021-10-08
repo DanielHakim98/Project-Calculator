@@ -1,24 +1,19 @@
-const add = function(num1, num2) {
-    return parseFloat(num1)+parseFloat(num2);
-};
 
-const subtract = function(num1, num2) {
-    return num1-num2;
-};
+function operate(num1, num2, operator) {
+    let action;
+    if(operator=="+") action="add";
+    if(operator=="-") action="minus";
+    if(operator=="×") action="multi";
+    if(operator=="/") action="divide";
+  const actions = {
+    add: (num1, num2) => parseFloat(num1) + parseFloat(num2),
+    minus: (num1, num2) => num1 - num2,
+    multi: (num1, num2) => num1 * num2,
+    divide: (num1, num2) => num1/ num2,
+  };
 
-const divide = function(num1, num2){
-    return num1/num2;
-};
-const multiply = function(num1, num2) {
-    return num1*num2;
-};
-
-const operate = function(num1,num2,operator){
-    if(operator=="+") return add(num1,num2);
-    else if(operator=="-") return subtract(num1,num2);
-    else if(operator=="×") return multiply(num1,num2);
-    else return divide(num1,num2);
-};
+  return actions[action]?.(num1, num2) ?? "Error";;
+}
 
 const makeIntoANumber = function(arr){
     const show=arr.reduce((total,item)=>{
@@ -26,6 +21,7 @@ const makeIntoANumber = function(arr){
    });
    return show;
 };
+
 
 const connectAllString =function(str1,operator,str2){
     screen.textContent=str1+" "+operator+" "+str2;
@@ -103,7 +99,7 @@ btnsOperator.forEach((btn)=>{
 
         else if(total){                                         // Check for any previous calculation of 'total'.
 
-            if(arrNum1.length!==0) total="";                    // To start new calculation if new 'numbers' button is clicked.
+            if(arrNum1.length!==0 || total==NaN) total="";      // To start new calculation if new 'numbers' button is clicked.
             else arrNum1.push(total);                           // Store 'Total' as first operand if no new number is clicked after previous calculation.
 
             operator=e.target.textContent;
@@ -128,13 +124,16 @@ btnEqual.addEventListener('click',(e)=>{
     arrNum2.length=0;
     strNum2="";
     operator="";
+    screen.textContent=total;
 
+    if(total=="NaN") total="";
+    
     arrNum1.push(total);
     strNum1=makeIntoANumber(arrNum1);
-    screen.textContent=total;
-    
+  
     arrNum1.length=0;
     strNum1="";
+  
 });
 
 const btnPoint = document.getElementById('point');
