@@ -21,3 +21,5 @@
 * Still struggling with number direct concats with previous total calculation when number clicked.
 * Another thing is handling negative number. Such a mess actually, it's either I'm mindlessly coding or The project is really difficult.
 * The code has been simplify but it looks messy because all of them are not put in a function.  
+* Functions of calculation are changed with Object with all math operations.
+* NaN is thrown when divided by zero but will be replaced when next number or operator is clicked.
