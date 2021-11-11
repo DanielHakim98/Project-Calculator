@@ -57,11 +57,11 @@ btnsNumber.forEach((btn)=>{
             else{
                 arrNum1.push(e.target.textContent);
                 strNum1=makeIntoANumber(arrNum1);
-                connectAllString(strNum1,operator,strNum2);         
+                connectAllString(strNum1,operator,strNum2);
             }
         }
 
-        else{ 
+        else{
             arrNum2.push(e.target.textContent);                    // If the 'operator === true' , the clicked numbers will be as second operand.
             strNum2=makeIntoANumber(arrNum2);
             connectAllString(strNum1,operator,strNum2);
@@ -80,17 +80,17 @@ btnsOperator.forEach((btn)=>{
                 arrNum1.push(total);
                 operator=e.target.textContent;
                 // strNum1=makeIntoANumber(arrNum1);
-                // connectAllString(strNum1,operator,strNum2); 
+                // connectAllString(strNum1,operator,strNum2);
             }
             else{
                 arrNum1.push(e.target.textContent);
                 // strNum1=makeIntoANumber(arrNum1);
-                // connectAllString(strNum1,operator,strNum2); 
+                // connectAllString(strNum1,operator,strNum2);
             }
             strNum1=makeIntoANumber(arrNum1);
-            connectAllString(strNum1,operator,strNum2); 
+            connectAllString(strNum1,operator,strNum2);
         }
-        
+
         else if(operator!=="" && e.target.textContent==="-"){   // Allow second operand to be negative number.
             arrNum2.push(e.target.textContent);
             strNum2=makeIntoANumber(arrNum2);
@@ -127,18 +127,27 @@ btnEqual.addEventListener('click',(e)=>{
     screen.textContent=total;
 
     if(total=="NaN") total="";
-    
+
     arrNum1.push(total);
     strNum1=makeIntoANumber(arrNum1);
-  
+
     arrNum1.length=0;
     strNum1="";
-  
+
 });
 
 const btnPoint = document.getElementById('point');
 btnPoint.addEventListener('click',(e)=>{
-    
+    if(!operator){
+        arrNum1.push(e.target.textContent);
+        strNum1=makeIntoANumber(arrNum1);
+    }
+    else{
+        arrNum2.push(e.target.textContent);
+        strNum2=makeIntoANumber(arrNum2);
+    }
+    connectAllString(strNum1,operator,strNum2);
+
 });
 
 
@@ -156,7 +165,6 @@ btnClear.addEventListener('click',(e)=>{
 
 const btnDelete = document.getElementById('delete');
 btnDelete.addEventListener('click',(e)=>{
-    
 });
 
 
